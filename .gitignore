@@ -45,3 +45,5 @@ next-env.d.ts
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+/src/generated/prisma
