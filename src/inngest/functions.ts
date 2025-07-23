@@ -161,6 +161,7 @@ export const codeAgentFunction = inngest.createFunction(
     if(isError){
       return await prisma.message.create({
         data: {
+          projectId: event.data.projectId,
           content: "Something went wrong. please try again.",
           role: "ASSISTANT",
           type: "ERROR",
@@ -173,6 +174,7 @@ const content = summary
   : `Generated fragment based on the prompt: "${event.data.value}"`;
     return await prisma.message.create({
       data: {
+        projectId: event.data.projectId,
         content,
         role: "ASSISTANT",
         type: "RESULT",
