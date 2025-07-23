@@ -122,7 +122,7 @@ export const codeAgentFunction = inngest.createFunction(
       lastAssistantTextMessageContent(result);
 
       if (lastAssistantMessagetext && network){
-        if(lastAssistantMessagetext.includes("<task_summary")) {
+        if(lastAssistantMessagetext.includes("task_summary")) {
           network.state.data.summary = lastAssistantMessagetext;
         }
       }
@@ -162,7 +162,7 @@ export const codeAgentFunction = inngest.createFunction(
       return await prisma.message.create({
         data: {
           projectId: event.data.projectId,
-          content: "Something went wrong. please try again.",
+          content: "Something went wrong. Please try again.",
           role: "ASSISTANT",
           type: "ERROR",
         },
