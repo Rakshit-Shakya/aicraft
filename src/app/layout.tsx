@@ -3,6 +3,7 @@ import { Inter, DM_Sans } from "next/font/google";
 import "./globals.css";
 import {  TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "next-themes";
 
 export const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 export const dmSans = DM_Sans({ variable: "--font-dm-sans", subsets: ["latin"] });
@@ -20,10 +21,19 @@ export default function RootLayout({
 }>) {
   return (
     <TRPCReactProvider>
-    <html lang="en">
-      <body className={`${inter.variable} ${dmSans.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body 
+      className={`${inter.variable} ${dmSans.variable} antialiased`}
+      >
+        <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+        >
         <Toaster />
         {children}
+        </ThemeProvider>
       </body>
     </html>
   </TRPCReactProvider>  
