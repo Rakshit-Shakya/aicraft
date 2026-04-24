@@ -1,0 +1,17 @@
+# This is a config for E2B sandbox template.
+# You can use template ID (jqzk8di8ox1pp9md41dz) or template name (Aicraft-nextjs-test-01) to create a sandbox:
+
+# Python SDK
+# from e2b import Sandbox, AsyncSandbox
+# sandbox = Sandbox.create("Aicraft-nextjs-test-01") # Sync sandbox
+# sandbox = await AsyncSandbox.create("Aicraft-nextjs-test-01") # Async sandbox
+
+# JS SDK
+# import { Sandbox } from 'e2b'
+# const sandbox = await Sandbox.create('Aicraft-nextjs-test-01')
+
+team_id = "b71d090b-8740-4e4e-8ba3-3a631c3816f1"
+start_cmd = "/home/user/compile_page.sh"
+dockerfile = "e2b.Dockerfile"
+template_name = "Aicraft-nextjs-test-01"
+template_id = "jqzk8di8ox1pp9md41dz"

@@ -16,7 +16,7 @@ export const codeAgentFunction = inngest.createFunction(
   { event: "code-agent/run" },
   async ({ event, step}) => {
     const sandboxId = await step.run("get-sandbox-id", async () => {
-      const sandbox = await Sandbox.create("aicraft-nextjs-test-2");
+      const sandbox = await Sandbox.create("Aicraft-nextjs-test-01");
       return sandbox.sandboxId;
     });
   const codeAgent = createAgent<AgentState>({
