@@ -16,14 +16,17 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { PROJECT_TEMPLATES } from "../../constants";
 
+import { useUser, SignInButton } from "@clerk/nextjs";
+
 
 const formSchema = z.object({
     value: z.string()
-        .min(1, {message: "Prompt is required"})
-        .max(10000, {message: "Prompt is too long"}),
+    .min(1, {message: "Prompt is required"})
+    .max(10000, {message: "Prompt is too long"}),
 })
 
 export const ProjectForm = () => {
+    const { isSignedIn } = useUser();
     const router = useRouter();
     const trpc = useTRPC();
     const queryClient= useQueryClient();
@@ -48,11 +51,16 @@ export const ProjectForm = () => {
         },
     }));
     
-    const onSubmit= async (values: z.infer<typeof formSchema>) => {
-        await createProject.mutateAsync({
-            value: values.value,
-        });
-    };
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!isSignedIn) {
+        toast.error("Sign in to create and save projects");
+        return;
+    }
+
+    await createProject.mutateAsync({
+        value: values.value,
+    });
+};
     
     const onSelect = (value: string) => {
         form.setValue("value", value, {
@@ -107,20 +115,31 @@ export const ProjectForm = () => {
                     </kbd>
                 &nbsp; to submit
                 </div>
-                <Button
-                type="submit"
-                disabled={isButtonDisabled}
-                className={cn(
-                    "size-8 rounded-full",
-                    isButtonDisabled && "bg-muted-foreground border"
-                )}
-                >
-                    {isPending ? (
-                        <Loader2Icon className="size-4 animate-spin"/>
-                    ): (
-                    <ArrowUpIcon/>
-                    )}
-                </Button>
+                {!isSignedIn ? (
+    <SignInButton mode="modal">
+        <Button
+            type="button"
+            className="size-8 rounded-full"
+        >
+            <ArrowUpIcon />
+        </Button>
+    </SignInButton>
+) : (
+    <Button
+        type="submit"
+        disabled={isButtonDisabled}
+        className={cn(
+            "size-8 rounded-full",
+            isButtonDisabled && "bg-muted-foreground border"
+        )}
+    >
+        {isPending ? (
+            <Loader2Icon className="size-4 animate-spin"/>
+        ) : (
+            <ArrowUpIcon/>
+        )}
+    </Button>
+)}
             </div>
         </form> 
         <div className="flex-wrap justify-center gap-2 hidden md:flex max-w-3xl">
@@ -139,3 +158,4 @@ export const ProjectForm = () => {
         </Form>
     );
 };
+
