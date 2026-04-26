@@ -4,6 +4,7 @@ import "./globals.css";
 import {  TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const dmSans = DM_Sans({ variable: "--font-dm-sans", subsets: ["latin"] });
@@ -20,6 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <ClerkProvider>
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${dmSans.variable} antialiased`}
@@ -37,5 +39,6 @@ export default function RootLayout({
         </TRPCReactProvider>
       </body>
     </html>
+    </ClerkProvider>
   );
 }
